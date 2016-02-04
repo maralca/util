@@ -255,6 +255,10 @@ var XtrGraficoUtil = {
             color.g *= (1 - percent);
             color.b *= (1 - percent);
 
+            color.r = parseInt(color.r);
+            color.g = parseInt(color.g);
+            color.b = parseInt(color.b);
+
             return "rgb("+color.r+","+color.g+","+color.b+")"; 
         },
         blend:function(color1, color2, percent){
@@ -267,9 +271,9 @@ var XtrGraficoUtil = {
             g = color1.a * color1.g * (1 - color2.a) + color2.g * color2.a;
             b = color1.a * color1.b * (1 - color2.a) + color2.b * color2.a;
 
-            r = Math.round(r);
-            g = Math.round(g);
-            b = Math.round(b);
+            r = parseInt(r);
+            g = parseInt(g);
+            b = parseInt(b);
 
             if(!XtrGraficoUtil.isset(percent))
                 return "rgb("+r+","+g+","+b+")"; 
