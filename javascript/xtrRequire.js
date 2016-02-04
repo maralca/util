@@ -1,5 +1,5 @@
 function xtrRequire(paths,callback){
-	const root = "..\\geochartlibs\\";
+	var root = "..\\geochartlibs\\";
 	var script;
 	var path;
 	var pathIndex;
