@@ -43,10 +43,14 @@ var XtrGraficoUtil = {
         
         return amI
     },
-    hasInObj:function(array,prop,needle){
-        for (var index = 0; index < array.length; index++) {
-            var obj = array[index];
-            if(obj[prop] == needle)
+    hasInObj:function(haystack,property,needle){
+        var index;
+        var propTarget;
+
+        for(index = 0; index < haystack.length; index++){
+            obj = haystack[index];
+            propTarget = obj[property];
+            if(propTarget == needle)
                 return true;
         }
         return false;
