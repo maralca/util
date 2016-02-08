@@ -85,6 +85,89 @@ var XtrGraficoUtil = {
 
         return amI;
     },
+    isempty: function(obj){
+        var obj;
+        var prop;
+
+        if(!this.isset(obj))
+            return true;
+
+        for(prop in obj){ 
+            if(obj.hasOwnProperty(prop)){
+                return false;
+            }
+        }
+        return true;
+    },
+    nodeIndexOf:function(nodelist,nodeTarget){
+        var node;
+        var nodeIndex;
+
+        for(nodeIndex = 0; nodelist.length > nodeIndex; nodeIndex++){
+            node = nodelist[nodeIndex];
+            if(nodeTarget == node)
+                return nodeIndex;
+        }
+        return -1;
+    },
+    nodeClosest: function(element, selector) {
+        var matchesFn;
+
+        // find vendor prefix
+        ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+            if (typeof document.body[fn] == 'function') {
+                matchesFn = fn;
+                return true;
+            }
+            return false;
+        })
+
+        // traverse parents
+        while (element!==null) {
+            parent = element.parentElement;
+            if (parent!==null && parent[matchesFn](selector)) {
+                return parent;
+            }
+            element = parent;
+        }
+
+        return null;
+    },
+    forcingKeyPress: function(keyName,keyCode,charCode,ctrl,alt,shif){
+        var keyboardEvent = document.createEvent("KeyboardEvent");
+        var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
+
+        ctrl = this.isset() ? ctrl : false;
+        alt = this.isset() ? alt : false;
+        shif = this.isset() ? shif : false;
+
+        keyboardEvent[initMethod](
+           keyName, // event type : keydown, keyup, keypress
+            true, // bubbles
+            true, // cancelable
+            window, // viewArg: should be window
+            ctrl, // ctrlKeyArg
+            alt, // altKeyArg
+            shif, // shiftKeyArg
+            false, // metaKeyArg
+            keyCode, // keyCodeArg : unsigned long the virtual key code, else 0
+            charCode // charCodeArgs : unsigned long the Unicode character associated with the depressed key, else 0
+        );
+        document.dispatchEvent(keyboardEvent);
+    },
+    parseSVG: function(content,width,height) {
+        var div= document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+        div.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" heihght="'+height+'">'+content+'</svg>';
+        var frag= document.createDocumentFragment();
+        while (div.firstChild.firstChild)
+            frag.appendChild(div.firstChild.firstChild);
+        return frag;
+    },
+    svg2src: function(svg){
+        svg = this.parseSVG(svg);
+        svg = new XMLSerializer().serializeToString(svg);
+        return 'data:image/svg+xml;base64,'+window.btoa(svg);
+    },
     log10:function(){
 
     },
