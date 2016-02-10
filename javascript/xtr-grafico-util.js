@@ -75,6 +75,7 @@ var XtrGraficoUtil = {
         var amI;
 
         amI = this.isobj(any) ? any instanceof Array : false;
+        amI = amI || any instanceof NodeList;
 
         return amI;
     },
@@ -98,6 +99,38 @@ var XtrGraficoUtil = {
             }
         }
         return true;
+    },
+    isnode: function(any){
+        var amI;
+
+        amI = any instanceof Node;
+
+        return amI;
+    },
+    toNode: function(any){
+        var node;
+
+        if(this.isnode(any)){
+            return any;
+        }
+
+        node = document.querySelector(any);
+
+        return node;
+    },
+    toNodes: function(any){
+        var node;
+
+        if(this.isnode(any)){
+            if(this.isarray(any)){
+                return any;
+            }
+            return [any];
+        }
+
+        node = document.querySelectorAll(any);
+
+        return node;
     },
     nodeIndexOf:function(nodelist,nodeTarget){
         var node;
@@ -155,8 +188,8 @@ var XtrGraficoUtil = {
         );
         document.dispatchEvent(keyboardEvent);
     },
-    parseSVG: function(content,width,height) {
-        var div= document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+    parseSVG: function(content,width,height){
+        var div= document.createElementNS('Use http://www.w3.org/1999/xhtml', 'div');
         div.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" heihght="'+height+'">'+content+'</svg>';
         var frag= document.createDocumentFragment();
         while (div.firstChild.firstChild)
@@ -167,6 +200,63 @@ var XtrGraficoUtil = {
         svg = this.parseSVG(svg);
         svg = new XMLSerializer().serializeToString(svg);
         return 'data:image/svg+xml;base64,'+window.btoa(svg);
+    },
+    removeClass: function(element,className){
+
+        element.className = element.className.replace(" "+className,"");
+        element.className = element.className.replace(className+" ","");
+        element.className = element.className.replace(className,"");
+
+        return element;
+    },
+    addClass: function(element,className){
+        this.removeClass(element,className);
+        element.className += " "+className;
+
+        return element;
+    },
+    setStyle: function(element,styleObj){
+        var property;
+        var value;
+        var important;
+
+        for(property in styleObj){
+            value = setStyle[property];
+            if(value.indexOf("!important") >= 0){
+                value = value.replace(" !important","");
+                value = value.replace("!important","");
+                element.style.setProperty(property,value,"important");
+            }
+            else if(value.indexOf("important") >= 0){
+                value = value.replace("important","");
+                value = value.replace(" important","");
+                element.style.setProperty(property,value,"important");
+            }
+            else{
+                element.style.setProperty(property,value);
+            }
+        }
+        return element;
+    },
+    setAttributes: function(element,attrObj,exceptions){
+        var property;
+        var value;
+
+        exceptions = this.isset(exceptions) ? exceptions : [];
+        exceptions = this.isarray(exceptions) ? exceptions : [exceptions];
+
+        for(property in attrObj){
+            value = attrObj[property];
+            if(exceptions.indexOf(property) < 0)
+                element.setAttribute(property,value);
+        }
+
+        return element;
+    },
+    setListener: function(element,callback,type){
+        if(!this.iscallable(callback)) return;
+        type = type || "click";
+        element.addEventListener(type,callback);
     },
     log10:function(){
 
