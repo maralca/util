@@ -1,4 +1,17 @@
 var XtrGraficoUtil = {
+    compare: function(a,b,property){
+        if(this.isset(property)){
+            a = eval("a."+property);
+            b = eval("b."+property);
+        }
+        if(a > b){
+            return 1;
+        }
+        if(b > a){
+            return -1;
+        }
+        return 0;
+    },
     convertKMB:function(base10,decimalCases,notBase){
         var val10;
         var UN;
