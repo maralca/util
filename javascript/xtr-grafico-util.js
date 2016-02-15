@@ -1,6 +1,6 @@
 var XtrGraficoUtil = {
     compare: function(a,b,property){
-        if(this.isset(property)){
+        if(XtrGraficoUtil.isset(property)){
             a = eval("a."+property);
             b = eval("b."+property);
         }
