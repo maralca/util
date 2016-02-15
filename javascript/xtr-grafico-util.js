@@ -485,13 +485,16 @@ var XtrGraficoUtil = {
             splited = false;
             for(splitIndex = 0; splits.length > splitIndex && !splited; splitIndex++){
                 split = splits[splitIndex];
-                str = str.split(split);
-                if(str.length > 1){
+                if(str.indexOf(split) >= 0){
+                    str = str.split(split);
+                    if(this.isset(pos)){
+                        str = str[pos];
+                        str = str.trim();
+                    }
+                    else{
+                        str = str[0];
+                    }
                     splited = true;
-                    str = str[pos];
-                }
-                else{
-                    str = str[0];
                 }
             };
             strs.splice(strIndex,1,str);
