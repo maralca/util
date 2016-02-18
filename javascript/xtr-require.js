@@ -11,6 +11,7 @@ function xtrRequire(paths,callback){
 		script = document.getElementById(path+"_script");
 		if(script == null){
 			script = document.createElement("script");
+			script.setAttribute("id",path+"_script");
 		    script.setAttribute("type","text/javascript");
 			script.onload = function(){
 				console.info("xtrRquire, script loaded with success");
