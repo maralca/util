@@ -12,6 +12,9 @@ var XtrGraficoUtil = {
         }
         return 0;
     },
+    capitalize:function(){
+
+    },
     convertKMB:function(base10,decimalCases,notBase){
         var val10;
         var UN;
@@ -516,8 +519,14 @@ var XtrGraficoUtil = {
         return strs;
     }
 }
-if (!String.prototype.trim) {
+if(!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
     };
+}
+String.prototype.capitalize = function(){
+    var string = this;
+    string = string.toLowerCase();
+    string = string.charAt(0).toUpperCase() + string.substr(1);
+    return string.replace(/\s[a-z]|'[a-z]/g,function(letter){ return letter.toUpperCase(); });
 }
