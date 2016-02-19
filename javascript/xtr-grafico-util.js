@@ -218,11 +218,19 @@ var XtrGraficoUtil = {
         return 'data:image/svg+xml;base64,'+window.btoa(svg);
     },
     removeClass: function(element,className){
+        try{
+            element.className = element.className.replace(" "+className,"");
+            element.className = element.className.replace(className+" ","");
+            element.className = element.className.replace(className,"");
+        }
+        catch(e){
+            var temp = element.getAttribute("class");
+            temp = temp.replace(" "+className,"");
+            temp = temp.replace(className+" ","");
+            temp = temp.replace(className,"");
 
-        element.className = element.className.replace(" "+className,"");
-        element.className = element.className.replace(className+" ","");
-        element.className = element.className.replace(className,"");
-
+            element.setAttribute("class",temp);
+        }
         return element;
     },
     addClass: function(element,className){
