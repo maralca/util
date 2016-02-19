@@ -528,5 +528,5 @@ String.prototype.capitalize = function(){
     var string = this;
     string = string.toLowerCase();
     string = string.charAt(0).toUpperCase() + string.substr(1);
-    return string.replace(/\s[a-z]|'[a-z]/g,function(letter){ return letter.toUpperCase(); });
+    return string.replace(/\s[a-z]|'[a-z]|-[a-z]/g,function(letter){ return letter.toUpperCase(); });
 }
