@@ -401,16 +401,22 @@ var XtrGraficoUtil = {
 
             return "rgb(" + r + "," + g + "," + b + ")";
         },
-        rgbToHsl:function(color){
+        rgbToHsl:function(color,inHSL){
             var max,min;
+            var r,g,b;
             var h,s,l;
+            var a;
             var d;
-
             color = this.hex2rgb(color,true);
 
-            color.r /= 255;
-            color.g /= 255;
-            color.b /= 255;
+            r = color.r;
+            g = color.g;
+            b = color.b;
+            a = color.a;
+
+            r /= 255;
+            g /= 255;
+            b /= 255;
 
             max = Math.max(r, g, b);
             min = Math.min(r, g, b);
@@ -454,8 +460,12 @@ var XtrGraficoUtil = {
             s = Math.floor(s);
             l = Math.floor(l);
 
+            if(XtrGraficoUtil.isset(inHSL) ? inHSL : false){
+                return {h:h,s:s,l:l*(1-a)};
+            }
 
-            return "hsl("+h+","+s+","+l+")"
+
+            return "hsl("+h+","+s+"%,"+l+"%)"
         },
         shade:function(color, percent){
             color = this.hex2rgb(color,true);
@@ -488,6 +498,18 @@ var XtrGraficoUtil = {
                 return "rgb("+r+","+g+","+b+")"; 
 
             return "rgba("+r+","+g+","+b+","+percent+")";
+        },
+        rotate:function(color,rotate,opacaity){
+            color = this.hex2rgb(color);
+            color = this.rgbToHsl(color,true);
+
+            color.h = color.h+rotate;
+
+            if(XtrGraficoUtil.isset(opacaity)){
+                return "hsla("+color.h+","+color.s+"%,"+color.l+"%,"+opacaity+")";
+            }
+
+            return "hsl("+color.h+","+color.s+"%,"+color.l+"%)";
         }
     },
     splitter:function(splits,strs,pos){
