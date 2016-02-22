@@ -356,9 +356,7 @@ var XtrGraficoUtil = {
 
         var json;
 
-        json = JSON.stringify(any,function(key,val){
-            return val != null ? val.toFixed ? Number(val.toFixed(10)) : val : val;
-        });
+        json = JSON.stringify(any);
 
         return JSON.parse(json);
     },
