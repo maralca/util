@@ -354,7 +354,13 @@ var XtrGraficoUtil = {
         if(!XtrGraficoUtil.isset(any))
             return undefined;
 
-        return JSON.parse(JSON.stringify(any));
+        var json;
+
+        json = JSON.stringify(any,function(key,val){
+            return val != null ? val.toFixed ? Number(val.toFixed(10)) : val : val;
+        });
+
+        return JSON.parse(json);
     },
     color:{    
         hex2rgb:function(color,inRGB){
