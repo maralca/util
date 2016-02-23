@@ -235,8 +235,13 @@ var XtrGraficoUtil = {
     },
     addClass: function(element,className){
         this.removeClass(element,className);
-        element.className += " "+className;
-
+        if(element.className.baseVal){
+            element.className.baseVal += " "+className;
+        }
+        else{
+            element.className += " "+className;
+        }
+        
         return element;
     },
     setStyle: function(element,styleObj){
