@@ -250,7 +250,7 @@ var XtrGraficoUtil = {
         var important;
 
         for(property in styleObj){
-            value = setStyle[property];
+            value = styleObj[property];
             if(value.indexOf("!important") >= 0){
                 value = value.replace(" !important","");
                 value = value.replace("!important","");
