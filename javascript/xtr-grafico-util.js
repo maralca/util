@@ -287,8 +287,11 @@ var XtrGraficoUtil = {
         type = type || "click";
         element.addEventListener(type,callback);
     },
-    log10:function(){
-
+    log10:function(value){
+        var LOG10,LOGVAL;
+        LOG10 = Math.log(10);
+        LOGVAL = Math.log(value);
+        return LOGVAL / LOG10;
     },
     somatorium:function(collection){
         var item;
