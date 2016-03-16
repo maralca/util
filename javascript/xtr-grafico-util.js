@@ -71,6 +71,9 @@ var XtrGraficoUtil = {
         }
         return false;
     },
+    getBool: function(any){
+        return any == "true" || any == true;
+    },
     isnull:function(any){
         var amI;
         var nulos,nulo;
