@@ -12,6 +12,17 @@ var XtrGraficoUtil = {
         }
         return 0;
     },
+    remover:function(string,sepStart,sepEnd){
+        while(string.indexOf(sepStart) >= 0){
+            var start = string.indexOf(sepStart);
+            var end = string.indexOf(sepEnd);
+            var str = string.substring(start+sepStart.length,end);
+            string = string.replace(sepStart+str+sepEnd,"");
+        }
+        return string;
+    },
+    resolver:function(){
+    },
     capitalize:function(){
 
     },
